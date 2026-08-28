@@ -1,0 +1,13 @@
+<section class="page-head"><div class="shell">
+  <h1>{{ area.name }}</h1>
+  {% if area.city %}<p class="muted">{{ area.city }}</p>{% endif %}
+</div></section>
+<div class="shell">
+  {% if area.blurb %}<div class="prose">{{ area.blurb | newline_to_br }}</div>{% endif %}
+  {% if area_listings.size > 0 %}
+    <h2>On the market here</h2>
+    <div class="listing-grid">
+      {% for item in area_listings %}{% render 'listing-card', listing: item %}{% endfor %}
+    </div>
+  {% endif %}
+</div>

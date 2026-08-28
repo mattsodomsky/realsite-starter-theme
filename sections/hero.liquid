@@ -1,0 +1,21 @@
+{% comment %} The opening statement. Two settings; the tagline setting
+falls back to the site-wide one. {% endcomment %}
+<section class="hero">
+  <div class="shell">
+    <h1>{{ section.settings.heading | default: site.agent_name }}</h1>
+    <p class="lede">{{ section.settings.subheading | default: settings.tagline }}</p>
+    <a class="button" href="/listings">See the listings</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "id": "heading", "type": "text", "label": "Heading",
+      "note": "Blank shows the agent's name." },
+    { "id": "subheading", "type": "text", "label": "Subheading",
+      "note": "Blank shows the site tagline." }
+  ]
+}
+{% endschema %}

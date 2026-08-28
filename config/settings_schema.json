@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Brand",
+    "settings": [
+      { "id": "palette", "type": "palette", "label": "Colour scheme", "default": "plain",
+        "note": "Each scheme is a complete token set — ground, ink, paper, muted, line, accent." },
+      { "id": "tagline", "type": "text", "label": "Tagline",
+        "placeholder": "e.g. Winnipeg homes, found properly." },
+      { "id": "accent", "type": "text", "label": "Accent override",
+        "placeholder": "#31635a", "note": "Optional — a hex here beats the scheme's accent." }
+    ]
+  }
+]

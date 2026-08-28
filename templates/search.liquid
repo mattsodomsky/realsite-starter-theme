@@ -1,0 +1,39 @@
+{% comment %}
+  /listings — browse with live filters. The contract:
+    query.*      the current filter values (city, min_price, max_price, beds)
+    results      the page of listings; total; page; has_prev/has_next
+    all_count    how many listings the site has in total
+    data_updated DDF® freshness stamp — display it when present
+  data-partial-form="results" + {% partial 'results' %} is what makes
+  filters refresh without a page load. Keep the pair.
+{% endcomment %}
+<section class="page-head"><div class="shell"><h1>Homes for sale</h1></div></section>
+<div class="shell">
+  {% if all_count > 8 %}
+  <form class="filters" action="/listings" method="get" data-partial-form="results">
+    <input type="search" name="city" placeholder="Any city" value="{{ query.city }}">
+    <select name="beds" aria-label="Bedrooms">
+      <option value="">Any beds</option>
+      {% assign bed_steps = "1,2,3,4" | split: "," %}
+      {% for step in bed_steps %}
+        <option value="{{ step }}" {% if query.beds == step %}selected{% endif %}>{{ step }}+ beds</option>
+      {% endfor %}
+    </select>
+    <noscript><button class="button" type="submit">Filter</button></noscript>
+  </form>
+  {% endif %}
+
+  {% partial 'results' %}
+    <p class="muted">{{ total }} home{% if total != 1 %}s{% endif %}</p>
+    <div class="listing-grid">
+      {% for item in results %}{% render 'listing-card', listing: item %}{% endfor %}
+    </div>
+    {% if has_prev or has_next %}
+      <nav class="pagination">
+        {% if has_prev %}<a href="/listings?page={{ page | minus: 1 }}">&larr; Previous</a>{% endif %}
+        {% if has_next %}<a href="/listings?page={{ page | plus: 1 }}">Next &rarr;</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% endpartial %}
+  {% if data_updated %}<p class="attribution">Data was last updated {{ data_updated }}.</p>{% endif %}
+</div>

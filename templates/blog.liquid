@@ -1,0 +1,12 @@
+<section class="page-head"><div class="shell"><h1>Blog</h1></div></section>
+<div class="shell narrow">
+  {% for post in posts %}
+    <article class="post-row">
+      <time class="muted">{{ post.published_on }}</time>
+      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      <p class="muted">{{ post.excerpt }}</p>
+    </article>
+  {% else %}
+    <p class="muted">Nothing here yet.</p>
+  {% endfor %}
+</div>

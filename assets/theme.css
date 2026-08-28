@@ -1,0 +1,107 @@
+/* Starter theme CSS — deliberately plain, so what you build on top is yours.
+ *
+ * The engine injects the active colour scheme before this file loads:
+ *   :root { --ground; --ink; --paper; --muted; --line; --accent }
+ * Style with those tokens and every scheme in config/theme.json —
+ * plus the owner's accent override — works automatically.
+ */
+
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--accent); }
+
+/* Layout primitives */
+.shell { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
+.shell.narrow { max-width: 42rem; }
+.section { padding: 3.5rem 0; }
+.muted { color: var(--muted); }
+.prose { max-width: 42rem; }
+.prose p { margin-bottom: 1em; }
+
+/* Type scale */
+h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+h3 { font-size: 1.125rem; margin-bottom: 0.5rem; }
+
+/* Header / footer */
+.site-header { border-bottom: 1px solid var(--line); padding: 1rem 0; }
+.site-header .shell { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.brand { font-weight: 700; color: var(--ink); text-decoration: none; }
+.site-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.site-nav a { color: var(--ink); text-decoration: none; }
+.site-nav a[aria-current="page"], .site-nav a:hover { color: var(--accent); }
+.site-footer { border-top: 1px solid var(--line); margin-top: 4rem; padding: 2rem 0; }
+.footer-cols { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.footer-name { font-weight: 600; }
+.attribution { color: var(--muted); font-size: 0.8rem; margin-top: 1.5rem; }
+
+/* Buttons */
+.button {
+  display: inline-block; background: var(--accent); color: var(--paper);
+  padding: 0.6rem 1.2rem; border: 0; border-radius: 6px;
+  font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
+}
+.button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+
+/* Hero */
+.hero { padding: 5rem 0; }
+.hero .lede { color: var(--muted); font-size: 1.25rem; margin: 0.5rem 0 1.5rem; max-width: 34rem; }
+
+/* Listings */
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.listing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+.listing-card { display: block; color: var(--ink); text-decoration: none; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.listing-card img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+.listing-card-body { display: grid; gap: 0.15rem; padding: 0.9rem 1rem 1.1rem; }
+.listing-card-price { font-weight: 700; }
+.badge { background: var(--ink); color: var(--ground); font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 999px; vertical-align: middle; }
+
+/* Listing page */
+.listing-page { padding: 2.5rem 0; }
+.listing-price { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+.photo-strip { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
+.listing-meta { color: var(--muted); margin-bottom: 1.5rem; }
+.specs { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.5rem; margin: 0.5rem 0 1.5rem; }
+.specs dt { color: var(--muted); }
+.listing-ask { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+
+/* Forms (lead-form is emitted by {% form %}) */
+.lead-form { display: grid; gap: 0.6rem; max-width: 26rem; margin-top: 1rem; }
+.lead-form input, .lead-form select, .lead-form textarea {
+  font: inherit; padding: 0.6rem 0.75rem; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--paper); color: var(--ink);
+}
+.lf-casl { font-size: 0.8rem; color: var(--muted); display: flex; gap: 0.5rem; align-items: baseline; }
+.lf-trap { position: absolute; left: -9999px; }
+[data-form-success]:not([hidden]) { color: var(--accent); font-weight: 600; }
+
+/* Search */
+.filters { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filters input, .filters select { font: inherit; padding: 0.5rem 0.7rem; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); color: var(--ink); }
+.pagination { display: flex; justify-content: space-between; margin-top: 2rem; }
+
+/* Pages, blog, FAQ */
+.page-head { padding: 3rem 0 1.5rem; }
+.post-row { padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); padding: 0.75rem 0; }
+.faq-item summary { font-weight: 600; cursor: pointer; }
+.faq-item .prose { padding-top: 0.5rem; }
+
+/* Valuation section */
+.valuation { background: var(--paper); border-block: 1px solid var(--line); }
+
+/* Landing layout */
+.landing-header { border-bottom: 1px solid var(--line); padding: 0.9rem 0; }
+.landing-header .shell { display: flex; justify-content: space-between; align-items: center; }
+.landing-main { padding: 3rem 0; }
+.landing-footer { padding: 2rem 0; }
+
+/* Compliance badge */
+.realtor-badge img { width: 100px; height: auto; }

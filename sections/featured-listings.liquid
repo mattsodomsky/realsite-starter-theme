@@ -1,0 +1,25 @@
+{% comment %} `listings` is provided on the homepage — newest actives. {% endcomment %}
+<section class="section">
+  <div class="shell">
+    <div class="section-head">
+      <h2>{{ section.settings.heading }}</h2>
+      <a href="/listings">View all &rarr;</a>
+    </div>
+    {% if listings.size > 0 %}
+      <div class="listing-grid">
+        {% for item in listings %}{% render 'listing-card', listing: item %}{% endfor %}
+      </div>
+    {% else %}
+      <p class="muted">Listings are on their way — check back soon.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured listings",
+  "settings": [
+    { "id": "heading", "type": "text", "label": "Heading", "default": "New to market" }
+  ]
+}
+{% endschema %}

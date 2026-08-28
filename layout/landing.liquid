@@ -1,0 +1,27 @@
+{% comment %}
+  The de-chromed frame for landing pages (templates named page.landing*).
+  Deliberately: no nav, no footer links, noindex — one job per page.
+{% endcomment %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{{ page_title | default: site.name }}</title>
+  <style>{{ palette_css }}</style>
+  <style>{{ theme_css }}</style>
+</head>
+<body class="landing-body">
+  <header class="landing-header">
+    <div class="shell">
+      <span class="brand">{{ site.name }}</span>
+      {% if site.phone %}<a href="tel:{{ site.phone }}">{{ site.phone }}</a>{% endif %}
+    </div>
+  </header>
+  <main>{{ content_for_layout }}</main>
+  <footer class="landing-footer">
+    <div class="shell">{% render 'attribution' %}</div>
+  </footer>
+</body>
+</html>

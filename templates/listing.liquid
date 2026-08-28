@@ -1,0 +1,52 @@
+{% comment %}
+  One listing. The `listing` object carries the whole spec sheet —
+  see https://docs.realsite.ca/developers/objects#listing
+{% endcomment %}
+<article class="listing-page">
+  <div class="shell">
+    <p class="muted">{{ listing.city }}{% if listing.neighbourhood %} · {{ listing.neighbourhood }}{% endif %}</p>
+    <h1>{{ listing.address }}</h1>
+    <p class="listing-price">{{ listing.price | money }}{% if listing.sold %} <span class="badge">Sold</span>{% endif %}</p>
+
+    {% if listing.photos.size > 0 %}
+      <div class="photo-strip">
+        {% for photo in listing.photos %}
+          <img src="{{ photo | image_url: width: 1200 }}" alt="{{ listing.address }} — photo {{ forloop.index }}"
+               {% unless forloop.first %}loading="lazy"{% endunless %}>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <p class="listing-meta">
+      {{ listing.beds }} bed · {{ listing.baths }} bath
+      {%- if listing.sqft %} · {{ listing.sqft }} sq ft{% endif %}
+      {%- if listing.year_built %} · Built {{ listing.year_built }}{% endif %}
+      {%- if listing.mls_number %} · MLS® {{ listing.mls_number }}{% endif %}
+    </p>
+
+    {% if listing.remarks %}<div class="prose">{{ listing.remarks }}</div>{% endif %}
+
+    {% comment %} The full spec sheet, grouped the way boards group it. {% endcomment %}
+    {% for group in listing.spec_groups %}
+      <h2>{{ group.title }}</h2>
+      <dl class="specs">
+        {% for row in group.rows %}<dt>{{ row.label }}</dt><dd>{{ row.value }}</dd>{% endfor %}
+      </dl>
+    {% endfor %}
+
+    {% unless listing.sold %}
+    <div class="listing-ask">
+      <h2>Ask about this home</h2>
+      {% form 'listing', listing: listing %}
+        <input type="text" name="name" placeholder="Your name">
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="message" rows="3" placeholder="Is it still available?"></textarea>
+        <button class="button" type="submit">Send to {{ site.agent_name }}</button>
+        <p data-form-success hidden>Sent — {{ site.agent_name }} will get back to you shortly.</p>
+      {% endform %}
+    </div>
+    {% endunless %}
+
+    {% if listing.office_name %}<p class="attribution">Listed by {{ listing.office_name }}.</p>{% endif %}
+  </div>
+</article>

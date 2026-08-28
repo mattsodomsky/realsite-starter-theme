@@ -1,0 +1,31 @@
+{
+  "label": "Starter",
+  "description": "The commented skeleton — every template wired, no personality imposed. Fork it, make it yours.",
+  "fonts": "System fonts",
+  "palette": ["#fbfaf8", "#1d1d1b", "#31635a", "#e6e2da"],
+  "default_palette": "plain",
+  "palettes": {
+    "plain": {
+      "label": "Plain",
+      "tokens": {
+        "ground": "#fbfaf8",
+        "ink": "#1d1d1b",
+        "paper": "#ffffff",
+        "muted": "#6f6c66",
+        "line": "#e6e2da",
+        "accent": "#31635a"
+      }
+    },
+    "slate": {
+      "label": "Slate",
+      "tokens": {
+        "ground": "#f7f8f9",
+        "ink": "#191c1f",
+        "paper": "#ffffff",
+        "muted": "#697077",
+        "line": "#dde1e5",
+        "accent": "#31516b"
+      }
+    }
+  }
+}

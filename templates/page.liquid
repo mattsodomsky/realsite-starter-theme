@@ -1,0 +1,8 @@
+{% comment %} Standalone pages: a heading, then an owner-arrangeable zone.
+legal_body is set for platform legal pages (privacy/terms). {% endcomment %}
+<section class="page-head"><div class="shell"><h1>{{ page.title }}</h1></div></section>
+{% if legal_body %}
+  <div class="shell prose">{{ legal_body | newline_to_br }}</div>
+{% else %}
+  {% zone 'page-main', default: '' %}
+{% endif %}

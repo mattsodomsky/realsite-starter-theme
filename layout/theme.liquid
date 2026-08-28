@@ -1,0 +1,71 @@
+{% comment %}
+  The frame around every page. The engine hands you:
+    palette_css        — :root { --ground; --ink; --paper; --muted; --line; --accent }
+    theme_css          — assets/theme.css, inlined
+    content_for_layout — the rendered template
+    current_path       — for active-nav states
+    og_image           — set by templates that have a share image (listings)
+  Everything else comes from the `site` and `settings` objects.
+  Docs: https://docs.realsite.ca/developers/templates
+{% endcomment %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title | default: site.name }}</title>
+  <meta property="og:title" content="{{ page_title | default: site.name }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+  {% if og_image %}<meta property="og:image" content="{{ og_image }}">{% endif %}
+  {% if site.google_site_verification != blank %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
+  <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | theme_asset_url }}">
+  <style>{{ palette_css }}</style>
+  <style>{{ theme_css }}</style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": {{ site.agent_name | json }},
+    "legalName": {{ site.name | json }}
+    {% if site.phone %},"telephone": {{ site.phone | json }}{% endif %}
+    {% if site.email %},"email": {{ site.email | json }}{% endif %}
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell">
+      <a class="brand" href="/">{{ site.name }}</a>
+      <nav class="site-nav" aria-label="Main">
+        {% for item in site.nav %}
+          <a href="{{ item.url }}"
+             {% if item.url == current_path %}aria-current="page"{% endif %}
+             {% if item.new_tab %}target="_blank" rel="noopener"{% endif %}>{{ item.label }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {{ content_for_layout }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-cols">
+        <div>
+          <p class="footer-name">{{ site.agent_name }}</p>
+          {% if site.brokerage_name %}<p class="muted">{{ site.brokerage_name }}</p>{% endif %}
+          {% if site.phone %}<p><a href="tel:{{ site.phone }}">{{ site.phone }}</a></p>{% endif %}
+          {% if site.email %}<p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>{% endif %}
+        </div>
+        <div class="footer-badge">
+          {% comment %} DDF® rule: the badge appears wherever listing content can. {% endcomment %}
+          {% render 'realtor-badge' %}
+        </div>
+      </div>
+      {% render 'attribution' %}
+    </div>
+  </footer>
+</body>
+</html>

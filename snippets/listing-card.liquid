@@ -1,0 +1,13 @@
+{% comment %} One card, used by every grid. Render with:
+  {% render 'listing-card', listing: item %} {% endcomment %}
+<a class="listing-card" href="{{ listing.url }}">
+  {% if listing.first_photo %}
+    <img src="{{ listing.first_photo | image_url: width: 800 }}"
+         alt="{{ listing.address }}, {{ listing.city }}" loading="lazy">
+  {% endif %}
+  <div class="listing-card-body">
+    <span class="listing-card-price">{{ listing.price | money }}{% if listing.sold %} <span class="badge">Sold</span>{% endif %}</span>
+    <span>{{ listing.address }}</span>
+    <span class="muted">{{ listing.beds }} bed · {{ listing.baths }} bath · {{ listing.city }}</span>
+  </div>
+</a>

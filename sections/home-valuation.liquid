@@ -1,0 +1,32 @@
+{% comment %} The classic seller-lead form. {% form 'valuation' %} posts to
+the platform and the lead lands in the CRM tagged with this page. {% endcomment %}
+<section class="section valuation" id="home-value">
+  <div class="shell narrow">
+    <h2>{{ section.settings.heading }}</h2>
+    <p class="muted">{{ section.settings.subheading }}</p>
+    {% form 'valuation' %}
+      {% if site.areas.size > 0 %}
+        <select name="area" aria-label="Your neighbourhood">
+          <option value="">Your neighbourhood</option>
+          {% for area in site.areas %}<option value="{{ area.name }}">{{ area.name }}</option>{% endfor %}
+        </select>
+      {% endif %}
+      <input type="text" name="address" placeholder="Your property address" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <button class="button" type="submit">{{ section.settings.button_label }}</button>
+      <p data-form-success hidden>Thanks — {{ site.agent_name }} will send your home's value shortly.</p>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home valuation",
+  "settings": [
+    { "id": "heading", "type": "text", "label": "Heading", "default": "What is your home worth?" },
+    { "id": "subheading", "type": "text", "label": "Subheading",
+      "default": "A straight answer from someone who knows your street." },
+    { "id": "button_label", "type": "text", "label": "Button label", "default": "Get my valuation" }
+  ]
+}
+{% endschema %}

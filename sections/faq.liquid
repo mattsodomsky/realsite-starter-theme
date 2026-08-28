@@ -1,0 +1,30 @@
+{% comment %} The blocks example: the owner adds, reorders, and removes
+questions in Design. Each block carries its own settings. {% endcomment %}
+<section class="section">
+  <div class="shell narrow">
+    <h2>{{ section.settings.heading }}</h2>
+    {% for block in section.blocks %}
+      {% if block.type == 'question' %}
+        <details class="faq-item">
+          <summary>{{ block.settings.question }}</summary>
+          <div class="prose">{{ block.settings.answer | newline_to_br }}</div>
+        </details>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "id": "heading", "type": "text", "label": "Heading", "default": "Good questions" }
+  ],
+  "blocks": [
+    { "type": "question", "name": "Question", "settings": [
+      { "id": "question", "type": "text", "label": "The question" },
+      { "id": "answer", "type": "textarea", "label": "Your answer" }
+    ] }
+  ]
+}
+{% endschema %}
