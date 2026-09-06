@@ -1,0 +1,30 @@
+{% comment %}
+  Both historical agent opening types share this deliberately plain view.
+  Render passes are explicit because Liquid snippets have isolated scope.
+{% endcomment %}
+<section class="hero agent-introduction{% if site.headshot_url == blank %} without-portrait{% endif %}">
+  <div class="shell agent-introduction-grid">
+    <div>
+      {% if section.settings.kicker != blank %}<p class="muted">{{ section.settings.kicker | escape }}</p>{% elsif settings.service_area != blank %}<p class="muted">{{ settings.service_area | escape }}</p>{% endif %}
+      <h1>{{ site.agent_name | inline_edit: 'site:agent_name' }}</h1>
+      {% if site.brokerage_name != blank %}<p class="muted">{{ site.brokerage_name | escape }}</p>{% endif %}
+      {% if section.id == 'agent-letter' and site.about != blank %}
+        <p class="lede">{{ site.about | inline_edit: 'site:about' }}</p>
+      {% else %}
+        <p class="lede">{{ site.tagline | default: section.settings.statement | inline_edit: 'site:tagline' }}</p>
+        {% if section.settings.show_about != 'no' and site.about != blank %}<p>{{ site.about | inline_edit: 'site:about' }}</p>{% endif %}
+      {% endif %}
+      <div class="hero-actions">
+        <button class="button" type="button" data-contact-open>Message {{ site.agent_name | split: ' ' | first | escape }}</button>
+        <a href="/listings">Browse homes</a>
+        {% if site.phone != blank %}<a href="tel:{{ site.phone | remove: ' ' | escape }}">{{ site.phone | escape }}</a>{% endif %}
+      </div>
+    </div>
+    {% if site.headshot_url != blank %}
+      <figure class="agent-portrait">
+        <img src="{{ site.headshot_url | safe_url | escape }}"{% if site.headshot_srcset %} srcset="{{ site.headshot_srcset | escape }}" sizes="(max-width: 700px) 100vw, 24rem"{% endif %} alt="{{ site.agent_name | escape }}" width="840" height="1050" fetchpriority="high">
+        {% if section.id == 'agent-letter' and section.settings.caption_me != blank %}<figcaption>{{ section.settings.caption_me | escape }}</figcaption>{% endif %}
+      </figure>
+    {% endif %}
+  </div>
+</section>

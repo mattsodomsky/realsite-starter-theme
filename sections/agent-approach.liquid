@@ -1,0 +1,90 @@
+{% if section.blocks.size > 0 %}
+<section class="agent-approach">
+  <div class="shell approach-grid">
+    <div class="approach-intro">
+      {% if section.settings.kicker != blank %}<p class="approach-kicker">{{ section.settings.kicker | escape }}</p>{% endif %}
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.introduction != blank %}<p>{{ section.settings.introduction | escape }}</p>{% endif %}
+    </div>
+    <div class="approach-steps">
+      {% for block in section.blocks %}
+        <article class="approach-step">
+          <span class="approach-number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index | escape }}</span>
+          <div><h3>{{ block.settings.title | escape }}</h3><p>{{ block.settings.text | escape }}</p></div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+<style>
+  :where(.agent-approach) { padding: 4rem 0; color: var(--ink); }
+  :where(.approach-grid) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
+  :where(.approach-intro h2) { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; overflow-wrap: anywhere; margin: 1rem 0; }
+  :where(.approach-intro p, .approach-step p) { line-height: 1.7; white-space: pre-line; overflow-wrap: anywhere; }
+  :where(.approach-kicker) { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; }
+  :where(.approach-step) { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 1rem; border-top: 1px solid var(--line); padding: 1.5rem 0; }
+  :where(.approach-step h3) { font-family: var(--font-display); font-size: 1.6rem; line-height: 1.2; margin: 0 0 .75rem; overflow-wrap: anywhere; }
+  :where(.approach-number) { font-size: .75rem; padding-top: .3rem; }
+  @media(max-width: 860px) { :where(.approach-grid) { grid-template-columns: minmax(0, 1fr); gap: 2rem; } }
+</style>
+
+{% schema %}
+{
+  "name": "Working together",
+  "settings": [
+    {
+      "id": "kicker",
+      "type": "text",
+      "label": "Eyebrow",
+      "default": "Working together"
+    },
+    {
+      "id": "heading",
+      "type": "text",
+      "label": "Heading",
+      "default": "Your priorities. A clear plan."
+    },
+    {
+      "id": "introduction",
+      "type": "textarea",
+      "label": "Introduction",
+      "default": "Tell me what you have in mind. We can work through the next steps together."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Service or step",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "text",
+          "type": "textarea",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "default_blocks": [
+    {
+      "type": "step",
+      "settings": {
+        "title": "Buying a home",
+        "text": "We’ll talk about your priorities, explore the options and make a plan for finding your next home."
+      }
+    },
+    {
+      "type": "step",
+      "settings": {
+        "title": "Selling your home",
+        "text": "We’ll discuss your timing, how to present your home and the steps involved in bringing it to market."
+      }
+    }
+  ]
+}
+{% endschema %}

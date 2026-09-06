@@ -2,12 +2,12 @@
 questions in Design. Each block carries its own settings. {% endcomment %}
 <section class="section">
   <div class="shell narrow">
-    <h2>{{ section.settings.heading }}</h2>
+    <h2>{{ section.settings.heading | escape }}</h2>
     {% for block in section.blocks %}
       {% if block.type == 'question' %}
         <details class="faq-item">
-          <summary>{{ block.settings.question }}</summary>
-          <div class="prose">{{ block.settings.answer | newline_to_br }}</div>
+          <summary>{{ block.settings.question | escape }}</summary>
+          <div class="prose">{{ block.settings.answer | escape | newline_to_br }}</div>
         </details>
       {% endif %}
     {% endfor %}

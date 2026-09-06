@@ -1,0 +1,9 @@
+{% if site.about != blank %}
+<section class="section"><div class="shell narrow">
+  <h2>{{ section.settings.heading | escape }}</h2>
+  <div class="prose">{{ site.about | inline_edit: 'site:about' | newline_to_br }}</div>
+</div></section>
+{% endif %}
+{% schema %}
+{"name":"About the agent","settings":[{"id":"heading","type":"text","label":"Heading","default":"About"}]}
+{% endschema %}

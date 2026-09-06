@@ -6,7 +6,8 @@ working theme with every template wired and deliberately no personality
 imposed: fork it, restyle it, and it's yours.
 
 **Documentation:** https://docs.realsite.ca/developers/overview
-**Platform:** https://realsite.ca · one plan, $99 CAD/month, everything included
+**Source:** https://github.com/mattsodomsky/realsite-starter-theme
+**Platform:** https://realsite.ca
 
 ---
 
@@ -24,9 +25,8 @@ evaluating theme development on REALsite:
   theme like this one. There is no locked layer.
 - **No developer tier, no revenue share.** Agencies pay nothing extra to
   build or own theme code, and client sites never carry platform branding.
-- **This starter is MIT-licensed.** The platform's five stock themes are
-  not open source; this skeleton is, and it demonstrates every engine
-  contract they use.
+- **This starter is MIT-licensed.** The platform's stock themes are
+  not open source; this skeleton is, and it demonstrates the core rendering contracts.
 
 ## Anatomy
 
@@ -42,11 +42,16 @@ templates/
   page.landing.liquid Landing pages (uses layout/landing.liquid)
   blog.liquid, post.liquid, area.liquid, 404.liquid
 sections/             Owner-arrangeable blocks, each with a {% schema %}
-  hero, featured-listings, home-valuation, text, faq (a blocks example)
+  agent-masthead, agent-letter  Plain agent introductions; shared setting IDs
+  agent-approach, agent-invitation  Editable service steps and contact invitation
+  hero                Legacy heading/subheading hero, retained for saved sites
+  about-agent, featured-listings, recent-sales, home-valuation, text, faq
 snippets/
   listing-card.liquid           The card every grid renders
   realtor-badge.liquid          REALTOR.ca badge — required by DDF® rules
   attribution.liquid            Board attribution
+  agent-introduction.liquid     Shared markup for both agent opening schemas
+  contact-dialog.liquid         Contact controls + platform lead-form hooks
 assets/theme.css      Token-based CSS — the palette system does the theming
 config/
   theme.json          Label, colour schemes (token sets)
@@ -85,6 +90,64 @@ walks the full loop.
 **Restyle checklist:** swap the font stack in `assets/theme.css`, define
 your colour schemes in `config/theme.json` (six tokens each), and go —
 the templates don't need to change for a restyle.
+
+## Keeping content portable
+
+The agent is the brand. The default homepage leads with `site.agent_name`,
+`site.headshot_url`, `site.tagline` and `site.about`. These are site content,
+not hard-coded demo names, credentials or reviews. All homepage defaults
+are included in this repository; a detached custom theme needs its own files.
+
+Keep the `home-main` zone name when restyling. Existing sites retain their
+saved section order, settings and blocks when changing themes; changing a
+zone's `default:` list does **not** rewrite an existing arrangement. The
+`agent-masthead` and `agent-letter` sections retain the platform's setting
+IDs and types, so an existing introduction renders here without renaming
+its saved values. `hero` keeps its original `heading` and `subheading` settings.
+
+A stock filesystem theme can fall back to platform shared sections. A
+**detached/custom theme does not**: copy every section and snippet referenced
+by its defaults or saved arrangements into that theme. If migrating a site
+with other section types, retain those files and their schema IDs too;
+unsupported section types may be omitted from rendering even though their
+saved data remains. Do not promise that arbitrary custom sections transfer
+to a theme that does not implement them. Preview the same site's content
+before switching, including a round trip back to its original theme.
+
+## Runtime and accessibility contracts
+
+- `data-contact-open`, `data-contact-close` and `data-contact-modal` connect
+  buttons to the dialog through the platform's injected `storefront.js`.
+  Keep `data-lead-form="contact-modal"` and the matching `sf` hidden field;
+  they identify which form should show a success/error message after redirect.
+- `{% form %}` supplies ordinary lead forms. The hand-written modal also
+  includes its honeypot and `{% marketing_consent %}`. The platform controls
+  consent text and signed tokens; do not replace these with a custom checkbox.
+- Keep visible labels, required email inputs, the skip link and focus styles.
+  Both layouts include the dialog, since landing-page zones can use the same
+  contact sections. The runtime is injected by REALsite, not a file to copy
+  from a third-party CDN. Optional direct phone/email links remain useful.
+- `site.areas` is an array of **names**, not objects. Use `site.area_links`
+  when you need each area's name and URL. The valuation example uses names.
+- Search pagination uses `prev_url` and `next_url` supplied by the controller;
+  building links from only `page` loses the visitor's selected filters.
+- Escape text and attribute values; apply `safe_url` to customer-provided
+  `href`/`src` values. `inline_edit` emits escaped text and platform-owned
+  editing markers. Do not hard-code HTML into ordinary text settings.
+
+## Verification
+
+In the REALsite application checkout, run:
+
+```sh
+RAILS_ENV=test bin/rails test test/models/starter_theme_test.rb
+```
+
+These tests parse every Liquid file and render the starter through the real
+engine, including its contact hooks, saved hero settings, area selector and
+filtered pagination. This standalone repository is theme source, not a
+Rails app or a static HTML site: it cannot render its platform objects by
+opening Liquid files directly in a browser.
 
 ## Compliance notes (Canadian real estate)
 

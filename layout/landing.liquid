@@ -8,20 +8,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>{{ page_title | default: site.name }}</title>
+  <title>{{ page_title | default: site.name | escape }}</title>
   <style>{{ palette_css }}</style>
   <style>{{ theme_css }}</style>
 </head>
 <body class="landing-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="landing-header">
     <div class="shell">
-      <span class="brand">{{ site.name }}</span>
-      {% if site.phone %}<a href="tel:{{ site.phone }}">{{ site.phone }}</a>{% endif %}
+      <span class="brand">{% if site.header_brand == 'logo' and site.logo_url != blank %}<img class="brand-logo" src="{{ site.logo_url | escape }}" alt="{{ site.name | escape }}">{% else %}{{ site.name | escape }}{% endif %}</span>
+      {% if site.phone %}<a href="tel:{{ site.phone | escape }}">{{ site.phone | escape }}</a>{% endif %}
     </div>
   </header>
-  <main>{{ content_for_layout }}</main>
+  <main id="main-content" tabindex="-1">{{ content_for_layout }}</main>
   <footer class="landing-footer">
-    <div class="shell">{% render 'attribution' %}</div>
+    <div class="shell">{% render 'realtor-badge' %}{% render 'attribution' %}</div>
   </footer>
+  {% render 'contact-dialog', site: site, current_path: current_path %}
 </body>
 </html>

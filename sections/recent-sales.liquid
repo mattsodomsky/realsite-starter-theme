@@ -1,0 +1,9 @@
+{% if sold_listings.size > 0 %}
+<section class="section"><div class="shell">
+  <h2>{{ section.settings.heading | default: 'Recent sales' | escape }}</h2>
+  <div class="listing-grid">{% for item in sold_listings %}{% render 'listing-card', listing: item %}{% endfor %}</div>
+</div></section>
+{% endif %}
+{% schema %}
+{"name":"Recent sales","settings":[{"id":"heading","type":"text","label":"Heading","default":""}]}
+{% endschema %}
