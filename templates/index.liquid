@@ -1,3 +1,8 @@
-{% comment %} The homepage is one arrangeable zone. Owners reorder these
-sections in Design; the default: list is what a fresh site shows. {% endcomment %}
-{% zone 'home-main', default: 'hero, featured-listings, home-valuation, text' %}
+{% comment %}
+  Keep the shared home-main name: saved section order, settings and blocks
+  belong to the site, not its theme. Defaults apply only to a fresh zone.
+  Every default section ships here, including approach and invitation, so
+  a detached/custom theme does not depend on stock theme fallback files.
+  The legacy hero section remains available for existing saved homepages.
+{% endcomment %}
+{% zone 'home-main', default: 'agent-masthead, agent-approach, featured-listings, home-valuation, agent-invitation' %}

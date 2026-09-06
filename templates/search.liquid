@@ -2,6 +2,7 @@
   /listings — browse with live filters. The contract:
     query.*      the current filter values (city, min_price, max_price, beds)
     results      the page of listings; total; page; has_prev/has_next
+    prev_url/next_url preserve the active filters during pagination
     all_count    how many listings the site has in total
     data_updated DDF® freshness stamp — display it when present
   data-partial-form="results" + {% partial 'results' %} is what makes
@@ -11,7 +12,8 @@
 <div class="shell">
   {% if all_count > 8 %}
   <form class="filters" action="/listings" method="get" data-partial-form="results">
-    <input type="search" name="city" placeholder="Any city" value="{{ query.city }}">
+    <label for="listing-city">City</label>
+    <input id="listing-city" type="search" name="city" placeholder="Any city" value="{{ query.city | escape }}">
     <select name="beds" aria-label="Bedrooms">
       <option value="">Any beds</option>
       {% assign bed_steps = "1,2,3,4" | split: "," %}
@@ -29,11 +31,11 @@
       {% for item in results %}{% render 'listing-card', listing: item %}{% endfor %}
     </div>
     {% if has_prev or has_next %}
-      <nav class="pagination">
-        {% if has_prev %}<a href="/listings?page={{ page | minus: 1 }}">&larr; Previous</a>{% endif %}
-        {% if has_next %}<a href="/listings?page={{ page | plus: 1 }}">Next &rarr;</a>{% endif %}
+      <nav class="pagination" aria-label="Listing pages">
+        {% if has_prev %}<a href="{{ prev_url | safe_url | escape }}">&larr; Previous</a>{% endif %}
+        {% if has_next %}<a href="{{ next_url | safe_url | escape }}">Next &rarr;</a>{% endif %}
       </nav>
     {% endif %}
   {% endpartial %}
-  {% if data_updated %}<p class="attribution">Data was last updated {{ data_updated }}.</p>{% endif %}
+  {% if data_updated %}<p class="attribution">Data was last updated {{ data_updated | escape }}.</p>{% endif %}
 </div>

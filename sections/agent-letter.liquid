@@ -1,0 +1,16 @@
+{% comment %} Plain presentation; retain the platform section's saved setting IDs and types. {% endcomment %}
+{% render 'agent-introduction', section: section, site: site, settings: settings %}
+
+{% schema %}
+{
+  "name": "Letter",
+  "settings": [
+    { "id": "kicker", "type": "text", "label": "Under your name", "default": "",
+      "placeholder": "Your service area · REALTOR® · your brokerage",
+      "note": "Empty shows your service area, REALTOR® and your brokerage (Settings)." },
+    { "id": "statement", "type": "text", "label": "The letter, when your About text is empty",
+      "default": "Hi, I'm your neighbour in real estate. Ask me anything about buying or selling here." },
+    { "id": "caption_me", "type": "text", "label": "Caption under your portrait", "default": "Me, most Saturdays" }
+  ]
+}
+{% endschema %}

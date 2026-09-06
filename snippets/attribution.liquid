@@ -1,4 +1,4 @@
 {% if listing.office_name %}
-  <p class="attribution">Listing courtesy of {{ listing.office_name }}.{% if listing.board %} Data provided by {{ listing.board }}.{% endif %}
-  {%- if data_updated %} Data was last updated {{ data_updated }}.{% endif %}</p>
+  <p class="attribution">Listing courtesy of {{ listing.office_name | escape }}.{% if listing.board %} Data provided by {{ listing.board | escape }}.{% endif %}
+  {%- if data_updated %} Data was last updated {{ data_updated | escape }}.{% endif %}</p>
 {% endif %}

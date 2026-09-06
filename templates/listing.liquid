@@ -4,14 +4,14 @@
 {% endcomment %}
 <article class="listing-page">
   <div class="shell">
-    <p class="muted">{{ listing.city }}{% if listing.neighbourhood %} · {{ listing.neighbourhood }}{% endif %}</p>
-    <h1>{{ listing.address }}</h1>
+    <p class="muted">{{ listing.city | escape }}{% if listing.neighbourhood %} · {{ listing.neighbourhood | escape }}{% endif %}</p>
+    <h1>{{ listing.address | escape }}</h1>
     <p class="listing-price">{{ listing.price | money }}{% if listing.sold %} <span class="badge">Sold</span>{% endif %}</p>
 
     {% if listing.photos.size > 0 %}
       <div class="photo-strip">
         {% for photo in listing.photos %}
-          <img src="{{ photo | image_url: width: 1200 }}" alt="{{ listing.address }} — photo {{ forloop.index }}"
+          <img src="{{ photo | image_url: width: 1200 | safe_url | escape }}" alt="{{ listing.address | escape }} — photo {{ forloop.index }}"
                {% unless forloop.first %}loading="lazy"{% endunless %}>
         {% endfor %}
       </div>
@@ -24,13 +24,13 @@
       {%- if listing.mls_number %} · MLS® {{ listing.mls_number }}{% endif %}
     </p>
 
-    {% if listing.remarks %}<div class="prose">{{ listing.remarks }}</div>{% endif %}
+    {% if listing.remarks %}<div class="prose">{{ listing.remarks | escape }}</div>{% endif %}
 
     {% comment %} The full spec sheet, grouped the way boards group it. {% endcomment %}
     {% for group in listing.spec_groups %}
-      <h2>{{ group.title }}</h2>
+      <h2>{{ group.title | escape }}</h2>
       <dl class="specs">
-        {% for row in group.rows %}<dt>{{ row.label }}</dt><dd>{{ row.value }}</dd>{% endfor %}
+        {% for row in group.rows %}<dt>{{ row.label | escape }}</dt><dd>{{ row.value | escape }}</dd>{% endfor %}
       </dl>
     {% endfor %}
 
@@ -38,15 +38,15 @@
     <div class="listing-ask">
       <h2>Ask about this home</h2>
       {% form 'listing', listing: listing %}
-        <input type="text" name="name" placeholder="Your name">
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" rows="3" placeholder="Is it still available?"></textarea>
-        <button class="button" type="submit">Send to {{ site.agent_name }}</button>
-        <p data-form-success hidden>Sent — {{ site.agent_name }} will get back to you shortly.</p>
+        <label>Your name<input type="text" name="name" autocomplete="name"></label>
+        <label>Email<input type="email" name="email" autocomplete="email" required></label>
+        <label>Message<textarea name="message" rows="3" placeholder="Is it still available?"></textarea></label>
+        <button class="button" type="submit">Send to {{ site.agent_name | escape }}</button>
+        <p data-form-success hidden>Thank you. Your inquiry has been sent to {{ site.agent_name | escape }}.</p>
       {% endform %}
     </div>
     {% endunless %}
 
-    {% if listing.office_name %}<p class="attribution">Listed by {{ listing.office_name }}.</p>{% endif %}
+    {% if listing.office_name %}<p class="attribution">Listed by {{ listing.office_name | escape }}.</p>{% endif %}
   </div>
 </article>

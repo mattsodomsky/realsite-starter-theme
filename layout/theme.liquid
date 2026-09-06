@@ -13,11 +13,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page_title | default: site.name }}</title>
-  <meta property="og:title" content="{{ page_title | default: site.name }}">
-  <meta property="og:site_name" content="{{ site.name }}">
-  {% if og_image %}<meta property="og:image" content="{{ og_image }}">{% endif %}
-  {% if site.google_site_verification != blank %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
+  <title>{{ page_title | default: site.name | escape }}</title>
+  <meta property="og:title" content="{{ page_title | default: site.name | escape }}">
+  {% if canonical_url %}<link rel="canonical" href="{{ canonical_url | escape }}">{% endif %}
+  {% if breadcrumbs_json %}<script type="application/ld+json">{{ breadcrumbs_json }}</script>{% endif %}
+  <meta property="og:site_name" content="{{ site.name | escape }}">
+  {% if og_image %}<meta property="og:image" content="{{ og_image | safe_url | escape }}">{% endif %}
+  {% if site.google_site_verification != blank %}<meta name="google-site-verification" content="{{ site.google_site_verification | escape }}">{% endif %}
   <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | theme_asset_url }}">
   <style>{{ palette_css }}</style>
   <style>{{ theme_css }}</style>
@@ -33,20 +35,21 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
     <div class="shell">
-      <a class="brand" href="/">{{ site.name }}</a>
+      <a class="brand" href="/">{% if site.header_brand == 'logo' and site.logo_url != blank %}<img class="brand-logo" src="{{ site.logo_url | escape }}" alt="{{ site.name | escape }}">{% else %}{{ site.name | escape }}{% endif %}</a>
       <nav class="site-nav" aria-label="Main">
         {% for item in site.nav %}
-          <a href="{{ item.url }}"
+          <a href="{{ item.url | safe_url | escape }}"
              {% if item.url == current_path %}aria-current="page"{% endif %}
-             {% if item.new_tab %}target="_blank" rel="noopener"{% endif %}>{{ item.label }}</a>
+             {% if item.new_tab %}target="_blank" rel="noopener"{% endif %}>{{ item.label | escape }}</a>
         {% endfor %}
       </nav>
     </div>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
@@ -54,10 +57,10 @@
     <div class="shell">
       <div class="footer-cols">
         <div>
-          <p class="footer-name">{{ site.agent_name }}</p>
-          {% if site.brokerage_name %}<p class="muted">{{ site.brokerage_name }}</p>{% endif %}
-          {% if site.phone %}<p><a href="tel:{{ site.phone }}">{{ site.phone }}</a></p>{% endif %}
-          {% if site.email %}<p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>{% endif %}
+          <p class="footer-name">{{ site.agent_name | escape }}</p>
+          {% if site.brokerage_name %}<p class="muted">{{ site.brokerage_name | escape }}</p>{% endif %}
+          {% if site.phone %}<p><a href="tel:{{ site.phone | escape }}">{{ site.phone | escape }}</a></p>{% endif %}
+          {% if site.email %}<p><a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a></p>{% endif %}
         </div>
         <div class="footer-badge">
           {% comment %} DDF® rule: the badge appears wherever listing content can. {% endcomment %}
@@ -67,5 +70,6 @@
       {% render 'attribution' %}
     </div>
   </footer>
+  {% render 'contact-dialog', site: site, current_path: current_path %}
 </body>
 </html>

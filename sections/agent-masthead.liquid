@@ -1,0 +1,18 @@
+{% comment %} Plain presentation; retain the platform section's saved setting IDs and types. {% endcomment %}
+{% render 'agent-introduction', section: section, site: site, settings: settings %}
+
+{% schema %}
+{
+  "name": "Masthead",
+  "settings": [
+    { "id": "kicker", "type": "text", "label": "Kicker", "default": "",
+      "placeholder": "Your service area · REALTOR® · your brokerage",
+      "note": "Empty shows your service area, REALTOR® and your brokerage (Settings). Type here to say something else." },
+    { "id": "statement", "type": "text", "label": "Statement",
+      "note": "One line in your voice. Your tagline (Settings) replaces this when set.", "default": "Helping you buy and sell with confidence." },
+    { "id": "show_about", "type": "select", "label": "First lines of your About text",
+      "options": [ { "value": "yes", "label": "Show under the statement" }, { "value": "no", "label": "Keep the masthead to the statement" } ],
+      "default": "yes" }
+  ]
+}
+{% endschema %}

@@ -2,9 +2,9 @@
 <div class="shell narrow">
   {% for post in posts %}
     <article class="post-row">
-      <time class="muted">{{ post.published_on }}</time>
-      <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-      <p class="muted">{{ post.excerpt }}</p>
+      <time class="muted">{{ post.published_on | escape }}</time>
+      <h2><a href="{{ post.url | safe_url | escape }}">{{ post.title | escape }}</a></h2>
+      <p class="muted">{{ post.excerpt | escape }}</p>
     </article>
   {% else %}
     <p class="muted">Nothing here yet.</p>

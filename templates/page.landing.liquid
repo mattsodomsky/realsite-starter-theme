@@ -1,5 +1,5 @@
 {% comment %} Renders inside layout/landing.liquid — see that file. {% endcomment %}
 <section class="landing-main"><div class="shell narrow">
-  <h1>{{ page.title }}</h1>
+  <h1>{{ page.title | escape }}</h1>
   {% zone 'page-main', default: '' %}
 </div></section>

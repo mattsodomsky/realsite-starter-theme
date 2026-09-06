@@ -2,8 +2,8 @@
 falls back to the site-wide one. {% endcomment %}
 <section class="hero">
   <div class="shell">
-    <h1>{{ section.settings.heading | default: site.agent_name }}</h1>
-    <p class="lede">{{ section.settings.subheading | default: settings.tagline }}</p>
+    <h1>{{ section.settings.heading | default: site.agent_name | escape }}</h1>
+    <p class="lede">{{ section.settings.subheading | default: site.tagline | escape }}</p>
     <a class="button" href="/listings">See the listings</a>
   </div>
 </section>

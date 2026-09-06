@@ -2,19 +2,19 @@
 the platform and the lead lands in the CRM tagged with this page. {% endcomment %}
 <section class="section valuation" id="home-value">
   <div class="shell narrow">
-    <h2>{{ section.settings.heading }}</h2>
-    <p class="muted">{{ section.settings.subheading }}</p>
+    <h2>{{ section.settings.heading | escape }}</h2>
+    <p class="muted">{{ section.settings.subheading | escape }}</p>
     {% form 'valuation' %}
       {% if site.areas.size > 0 %}
         <select name="area" aria-label="Your neighbourhood">
           <option value="">Your neighbourhood</option>
-          {% for area in site.areas %}<option value="{{ area.name }}">{{ area.name }}</option>{% endfor %}
+          {% for area in site.areas %}<option value="{{ area | escape }}">{{ area | escape }}</option>{% endfor %}
         </select>
       {% endif %}
-      <input type="text" name="address" placeholder="Your property address" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <button class="button" type="submit">{{ section.settings.button_label }}</button>
-      <p data-form-success hidden>Thanks — {{ site.agent_name }} will send your home's value shortly.</p>
+      <label>Your property address<input type="text" name="address" autocomplete="street-address" required></label>
+      <label>Email<input type="email" name="email" autocomplete="email" required></label>
+      <button class="button" type="submit">{{ section.settings.button_label | escape }}</button>
+      <p data-form-success hidden>Thank you. Your valuation request has been sent to {{ site.agent_name | escape }}.</p>
     {% endform %}
   </div>
 </section>

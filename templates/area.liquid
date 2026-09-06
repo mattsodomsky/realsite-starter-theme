@@ -1,9 +1,9 @@
 <section class="page-head"><div class="shell">
-  <h1>{{ area.name }}</h1>
-  {% if area.city %}<p class="muted">{{ area.city }}</p>{% endif %}
+  <h1>{{ area.name | escape }}</h1>
+  {% if area.city %}<p class="muted">{{ area.city | escape }}</p>{% endif %}
 </div></section>
 <div class="shell">
-  {% if area.blurb %}<div class="prose">{{ area.blurb | newline_to_br }}</div>{% endif %}
+  {% if area.blurb %}<div class="prose">{{ area.blurb | escape | newline_to_br }}</div>{% endif %}
   {% if area_listings.size > 0 %}
     <h2>On the market here</h2>
     <div class="listing-grid">

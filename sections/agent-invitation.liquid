@@ -1,0 +1,42 @@
+<section class="agent-invitation">
+  <div class="shell">
+    <p class="invitation-kicker">{{ site.agent_name | escape }}</p>
+    <h2>{{ section.settings.heading | escape }}</h2>
+    <div class="invitation-bottom"><p>{{ section.settings.text | escape }}</p><button class="button" type="button" data-contact-open>{{ section.settings.button_label | escape }}</button></div>
+  </div>
+</section>
+<style>
+  :where(.agent-invitation) { padding: 4rem 0; background: var(--ink); color: var(--ground); }
+  :where(.agent-invitation h2) { font-family: var(--font-display); font-size: clamp(2rem, 4.8vw, 4.5rem); line-height: 1.1; max-width: 16ch; margin: 1.25rem 0; overflow-wrap: anywhere; }
+  :where(.invitation-kicker) { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+  :where(.invitation-bottom) { display: flex; justify-content: space-between; align-items: end; gap: 2rem; }
+  :where(.invitation-bottom p) { max-width: 30rem; line-height: 1.7; white-space: pre-line; overflow-wrap: anywhere; }
+  :where(.agent-invitation .button) { background: var(--ground); color: var(--ink); border-color: var(--ground); min-height: 44px; white-space: normal; }
+  @media(max-width: 860px) { :where(.invitation-bottom) { align-items: start; flex-direction: column; } }
+</style>
+
+{% schema %}
+{
+  "name": "Personal contact invitation",
+  "settings": [
+    {
+      "id": "heading",
+      "type": "text",
+      "label": "Heading",
+      "default": "Let’s talk about your next move."
+    },
+    {
+      "id": "text",
+      "type": "textarea",
+      "label": "Introduction",
+      "default": "A question, an idea or a plan taking shape. Wherever you are in the process, I’d love to hear about it."
+    },
+    {
+      "id": "button_label",
+      "type": "text",
+      "label": "Button label",
+      "default": "Start a conversation"
+    }
+  ]
+}
+{% endschema %}
